@@ -88,6 +88,6 @@ class View {
     toggleShowCompleted () {
         this.showCompleted = !this.showCompleted;
         this.buildList();
-        this.toggleShowCompletedButton.value = this.showCompleted ? "Hide Completed" : "ShowCompleted";
+        this.toggleShowCompletedButton.value = this.showCompleted ? "Hide Completed" : "Show Completed";
     }
 }

@@ -51,14 +51,10 @@ class View {
         this.tasksContainer.innerHTML = "";
 
         tasks.forEach(task => {
-            if (task.isCompleted) {
-                html = html + "<div style='color:green;' class='form-check'>";
-            } else {
-                html = html + "<div class='form-check'>";
-            }
+            html = html + "<div class='form-check'>";
 
             html = html + `<input type='checkbox' class='task form-check-input' data-taskid='${task.id}' ${task.isCompleted ? "checked" : ""}>`
-                + `<label class='form-check-label'>${task.taskName}</label></div><br>`;
+                + `<label class='form-check-label'>${task.isCompleted ? "<del>" : ""}${task.taskName}${task.isCompleted ? "</del>" : ""}</label></div><br>`;
         });
 
         this.tasksContainer.innerHTML = html;

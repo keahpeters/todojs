@@ -9,6 +9,7 @@ class View {
         this.addTaskButton = document.getElementById("add-task-button");
         this.taskTextBox = document.getElementById("task-textbox");
         this.tasksContainer = document.getElementById("tasks-container");
+        this.toggleShowCompletedButton = document.getElementById("toggle-show-completed-button");
 
         this.taskTextBox.addEventListener("keyup", (event) => {
             if (event.keyCode === 13) {
@@ -16,9 +17,12 @@ class View {
             }
         }); 
         this.addTaskButton.addEventListener("click", () => this.notifyAddTaskEvent());
+        this.toggleShowCompletedButton.addEventListener("click", () => this.toggleShowCompleted())
 
         this.model.addTaskEvent.attach(() => this.addTask());
         this.model.taskStateChangedEvent.attach(() => this.buildList());
+
+        this.showCompleted = true;
     }
 
     notifyAddTaskEvent () {
@@ -51,6 +55,10 @@ class View {
         this.tasksContainer.innerHTML = "";
 
         tasks.forEach(task => {
+            if (task.isCompleted && !this.showCompleted) {
+                return;
+            }
+
             html = html + "<div class='form-check'>";
 
             html = html + `<input type='checkbox' class='task form-check-input' data-taskid='${task.id}' ${task.isCompleted ? "checked" : ""}>`
@@ -75,5 +83,11 @@ class View {
                 }
             });
         }); 
+    }
+
+    toggleShowCompleted () {
+        this.showCompleted = !this.showCompleted;
+        this.buildList();
+        this.toggleShowCompletedButton.value = this.showCompleted ? "Hide Completed" : "ShowCompleted";
     }
 }
